@@ -44,7 +44,7 @@ function App() {
   };
 
   return (
-    <div className='bg-[#424874] flex flex-col items-center p-10 max-w-5xl mx-auto max-h-[90vh]'>
+    <div className='bg-[#424874] flex flex-col items-center p-10 max-w-5xl mx-auto max-h-[100vh] md:max-h-[90vh]'>
       <div className='sticky top-0'>
         <h1 className='text-[#A6B1E1] p-2 text-4xl font-extrabold italic animate-pulse'>To-Do List</h1>
         <Textfiled
@@ -60,7 +60,7 @@ function App() {
           onClick={handleTaskAdd}
         />
       </div>
-      <div className='h-full overflow-y-auto '>
+      <div className='md:h-full overflow-y-auto '>
         <TaskList
           task={taskList}
           setTaskList={setTaskList}

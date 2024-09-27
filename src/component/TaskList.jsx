@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button';
+import '../assets/styles/tasklist.css';
 
 export default function TaskList({ task, setTaskList, completedTasks, setCompletedTasks }) {
   // Track which task is being edited
@@ -47,8 +48,8 @@ export default function TaskList({ task, setTaskList, completedTasks, setComplet
   return (
     <div>
       {task.map((taskItem, index) => (
-        <div key={index}>
-          <div className="border-2 m-2.5 p-2 flex flex-col md:flex-row justify-between items-center bg-[#A6B1E1] text-[#424874] w-[70vw]">
+        <div key={index} className="group">
+          <div className={`border-4 m-2.5 p-2 flex flex-col md:flex-row justify-between items-center ${completedTasks[index] ? 'completed-task-container' : 'task-container'} bg-[#A6B1E1] text-[#424874] w-[70vw] hover:bg-[#6e7bb6]`}>
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -76,39 +77,40 @@ export default function TaskList({ task, setTaskList, completedTasks, setComplet
                 </p>
               )}
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none transition-opacity duration-300">
               {editIndex === index ? (
-                <Button
-                  label="Save"
-                  type="button"
-                  className="text-white bg-[#424874] p-2 rounded m-1 w-14"
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default behavior
-                    handleTaskEdit(e, index);
-                  }}
-                />
+                <>
+                  <Button
+                    label="Save"
+                    type="button"
+                    className="text-white bg-[#424874] p-2 rounded m-1 w-14 hover:bg-[#7c8bcc]"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default behavior
+                      handleTaskEdit(e, index);
+                    }}
+                  />
+                  <Button
+                    label="Cancel"
+                    type="button"
+                    className="text-white bg-[#606ab4] p-2 rounded m-1 hover:bg-[#7c8bcc]"
+                    onClick={handleEditCancel}
+                  />
+                </>
               ) : (
-                <Button
-                  label="Edit"
-                  type="button"
-                  className="text-white bg-[#424874] p-2 rounded m-1 w-14"
-                  onClick={() => handleEdit(index)}
-                />
-              )}
-              {editIndex === index ? (
-                <Button
-                  label="Cancel"
-                  type="button"
-                  className="text-white bg-[#606ab4] p-2 rounded m-1"
-                  onClick={handleEditCancel}
-                />
-              ) : (
-                <Button
-                  label="Delete"
-                  type="button"
-                  className="text-white bg-[#606ab4] p-2 rounded m-1"
-                  onClick={() => handleDelete(index)}
-                />
+                <>
+                  <Button
+                    label="Edit"
+                    type="button"
+                    className="text-white bg-[#424874] p-2 rounded m-1 w-14 hover:bg-[#7c8bcc]"
+                    onClick={() => handleEdit(index)}
+                  />
+                  <Button
+                    label="Delete"
+                    type="button"
+                    className="text-white bg-[#606ab4] p-2 rounded m-1 hover:bg-[#7c8bcc]"
+                    onClick={() => handleDelete(index)}
+                  />
+                </>
               )}
             </div>
           </div>
