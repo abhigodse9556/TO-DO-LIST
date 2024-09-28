@@ -3,11 +3,13 @@ import './App.css';
 import Textfiled from './component/Textfiled';
 import Button from './component/Button';
 import TaskList from './component/TaskList';
+import SortDropdown from './component/SortDropdown'; // Import SortDropdown
 
 function App() {
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]); // State for tracking completed tasks
+  const [sortOrder, setSortOrder] = useState("newest"); // State for sorting tasks
 
   // Load tasks from localStorage on initial render
   useEffect(() => {
@@ -43,9 +45,52 @@ function App() {
     }
   };
 
+  const handleSortChange = (order) => {
+    setSortOrder(order); // Set the sorting order based on user selection
+  };
+
+  const getSortedTasks = () => {
+    let sortedTasks = [...taskList];
+    let sortedCompleted = [...completedTasks];
+
+    switch (sortOrder) {
+      case "oldest":
+        // Sort by oldest (default order from localStorage is already oldest, so just reverse the newest order)
+        sortedTasks.reverse();
+        sortedCompleted.reverse();
+        break;
+      case "incomplete":
+        // Sort with incomplete tasks first
+        sortedTasks = sortedTasks.filter((_, index) => !completedTasks[index]).concat(
+          sortedTasks.filter((_, index) => completedTasks[index])
+        );
+        sortedCompleted = sortedCompleted.filter(completed => !completed).concat(
+          sortedCompleted.filter(completed => completed)
+        );
+        break;
+      case "complete":
+        // Sort with complete tasks first
+        sortedTasks = sortedTasks.filter((_, index) => completedTasks[index]).concat(
+          sortedTasks.filter((_, index) => !completedTasks[index])
+        );
+        sortedCompleted = sortedCompleted.filter(completed => completed).concat(
+          sortedCompleted.filter(completed => !completed)
+        );
+        break;
+      case "newest":
+      default:
+        // Newest is default, already set
+        break;
+    }
+
+    return { sortedTasks, sortedCompleted };
+  };
+
+  const { sortedTasks, sortedCompleted } = getSortedTasks(); // Get sorted tasks
+
   return (
-    <div className='bg-[#424874] flex flex-col items-center p-10 max-w-5xl mx-auto max-h-[100vh] md:max-h-[90vh]'>
-      <div className='sticky top-0'>
+    <div className='bg-[#424874] flex flex-col items-center md:p-10 w-[100vw] md:max-w-[80vw] mx-auto h-[100vh] md:max-h-[90vh]'>
+      <div className='sticky top-0 flex flex-col items-center md:items-start'>
         <h1 className='text-[#A6B1E1] p-2 text-4xl font-extrabold italic animate-pulse'>To-Do List</h1>
         <Textfiled
           label="What is your task?"
@@ -59,13 +104,14 @@ function App() {
           label="Add Task"
           onClick={handleTaskAdd}
         />
+        <SortDropdown onSortChange={handleSortChange} /> {/* Add SortDropdown here */}
       </div>
-      <div className='md:h-full overflow-y-auto '>
+      <div className='md:h-full overflow-y-auto'>
         <TaskList
-          task={taskList}
+          task={sortedTasks} // Pass sorted tasks
           setTaskList={setTaskList}
-          completedTasks={completedTasks} // Pass completedTasks array
-          setCompletedTasks={setCompletedTasks} // Pass setter for completedTasks
+          completedTasks={sortedCompleted} // Pass sorted completion status
+          setCompletedTasks={setCompletedTasks}
         />
       </div>
     </div>

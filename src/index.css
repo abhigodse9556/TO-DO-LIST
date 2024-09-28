@@ -4,21 +4,23 @@
 
 body{
     background-color: #F4EEFF;
-}
-
-@media (min-width: 768px) {
-    body{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
+}
+
+@media (min-width: 1024px) {
+    /* width */
+    ::-webkit-scrollbar {
+    width: 8px;
+}
 }
  
 /* Track */

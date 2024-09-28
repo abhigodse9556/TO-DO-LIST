@@ -7,7 +7,7 @@ export default function Textfiled(props) {
       <input 
         type={props.type} 
         placeholder={props.placeholder} 
-        className='border-2 m-2 p-1 bg-[#F4EEFF] text-[#424874] w-[70vw]' 
+        className='border-2 m-2 p-1 bg-[#F4EEFF] text-[#424874] w-[70vw] md:font-bold' 
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)} 
       />
