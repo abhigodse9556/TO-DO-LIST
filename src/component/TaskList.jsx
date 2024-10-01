@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button';
 import '../assets/styles/tasklist.css';
 
-export default function TaskList({ task, setTaskList, completedTasks, setCompletedTasks }) {
+export default function TaskList({ task, setTaskList, completedTasks, setCompletedTasks, onTaskClick }) {
   const [editIndex, setEditIndex] = useState(null);
   const [editedTask, setEditedTask] = useState('');
 
@@ -45,7 +45,9 @@ export default function TaskList({ task, setTaskList, completedTasks, setComplet
     <div>
       {task.map((taskItem, index) => (
         <div key={index} className="group relative">
-          <div className={`border-4 m-2.5 p-2 flex flex-col md:flex-row justify-between ${completedTasks[index] ? 'completed-task-container' : 'task-container'} bg-[#A6B1E1] text-[#424874] w-[70vw] hover:bg-[#6e7bb6]`}>
+          <div
+            className={`border-4 m-2.5 p-2 flex flex-col md:flex-row justify-between ${completedTasks[index] ? 'completed-task-container' : 'task-container'} bg-[#A6B1E1] text-[#424874] w-[70vw] hover:bg-[#6e7bb6]`}
+          >
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -62,7 +64,9 @@ export default function TaskList({ task, setTaskList, completedTasks, setComplet
                   onChange={(e) => setEditedTask(e.target.value)}
                 />
               ) : (
-                <p className={`text-cyan-50 p-2 font-medium md:text-xl text-sm ${completedTasks[index] ? 'line-through' : ''}`}>
+                <p className={`text-cyan-50 p-2 font-medium md:text-xl text-sm ${completedTasks[index] ? 'line-through' : ''} cursor-pointer`}
+                  onClick={() => onTaskClick(index)}
+                >
                   {taskItem}
                 </p>
               )}

@@ -49,7 +49,7 @@ button:active {
     color: #424874;
     font-size: 1rem;
     cursor: pointer;
-    margin-bottom: 1rem;
+    height: min-content;
 }
 
 .sort-dropdown:hover {
