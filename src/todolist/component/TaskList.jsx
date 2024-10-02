@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button';
-import '../assets/styles/tasklist.css';
+import '../styles/tasklist.css';
 
 export default function TaskList({ task, setTaskList, completedTasks, setCompletedTasks, onTaskClick }) {
   const [editIndex, setEditIndex] = useState(null);

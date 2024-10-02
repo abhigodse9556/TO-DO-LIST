@@ -14,9 +14,9 @@ export default function SortDropdown({ onSortChange }) {
             className="text-[#424874] bg-[#A6B1E1] p-2 m-1 rounded md:font-bold"
             onChange={(e) => onSortChange(e.target.value)}
         >
-            <option value="incomplete">Incomplete tasks first</option>
             <option value="newest">Newest task first</option>
             <option value="oldest">Oldest task first</option>
+            <option value="incomplete">Incomplete tasks first</option>
             <option value="complete">Complete tasks first</option>
         </select>
         </div>
